@@ -17,6 +17,19 @@ objects identified by a URL from a Python program, similar to the
 urllib Python module. PycURL is mature, very fast, and supports a lot
 of features.
 
+%package docs
+Summary:        Documentation for Python interface to libcurl
+
+%description docs
+%{summary}.
+
+%package tests
+Summary:        Tests for Python interface to libcurl
+Requires:       python3-pycurl = %{version}-%{release}
+
+%description tests
+%{summary}.
+
 %prep
 %setup -q -n %{name}-%{version}/pycurl
 # remove windows-specific build script
@@ -35,8 +48,9 @@ rm -f tests/seek_cb_test.py
 # remove tests depending on the 'flaky' nose plug-in
 grep '^import flaky' -r tests | cut -d: -f1 | xargs rm -fv
 
-%build
 %{__python3} ./setup.py docstrings
+
+%build
 CFLAGS="%{optflags}" %{__python3} ./setup.py build --executable="%{__python3} -s" --with-openssl
 
 %install
@@ -47,7 +61,17 @@ rm -rf %{buildroot}%{_datadir}/doc/pycurl
 %files
 %defattr(-,root,root,-)
 %license COPYING-LGPL COPYING-MIT
-%doc ChangeLog README.rst examples doc tests
 %{python3_sitearch}/curl/
 %{python3_sitearch}/pycurl.*.so
 %{python3_sitearch}/pycurl-*.egg-info
+
+%files docs
+%defattr(-,root,root,-)
+%doc ChangeLog README.rst examples doc
+%{python3_sitearch}/curl/
+%{python3_sitearch}/pycurl.*.so
+%{python3_sitearch}/pycurl-*.egg-info
+
+%files tests
+%defattr(-,root,root,-)
+%doc tests
