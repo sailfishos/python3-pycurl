@@ -3,7 +3,7 @@ Version:        7.43.0.5
 Release:        1
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
-URL:            http://pycurl.sourceforge.net/
+URL:            https://github.com/sailfishos/python3-pycurl
 Source0:        %{name}-%{version}.tar.bz2
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
